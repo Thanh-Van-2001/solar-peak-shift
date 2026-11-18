@@ -1,0 +1,154 @@
+{
+ "hypotheses": {
+  "H1": {
+   "pos": 17,
+   "n": 17,
+   "p": 7.62939453125e-06,
+   "p_holm": 3.0517578125e-05,
+   "supported": true
+  },
+  "H2": {
+   "pos": 13,
+   "n": 14,
+   "p": 0.00091552734375,
+   "p_holm": 0.00274658203125,
+   "supported": true
+  },
+  "H3": {
+   "pos": 11,
+   "n": 18,
+   "p": 0.480682373046875,
+   "p_holm": 0.480682373046875,
+   "supported": false
+  },
+  "H4": {
+   "p": 0.0017166035674402466,
+   "U": 250.5,
+   "n_high": 18,
+   "n_low": 18,
+   "median_shift_high": 1.0,
+   "median_shift_low": 0.0,
+   "p_holm": 0.0034332071348804932,
+   "supported": true
+  }
+ },
+ "secondary": {
+  "ramp": {
+   "pos": 16,
+   "n": 18,
+   "p": 0.0006561279296875
+  },
+  "ramp_median_early": 8.123042000123364,
+  "ramp_median_late": 15.250835901384244,
+  "sep2": {
+   "pos": 16,
+   "n": 18,
+   "p": 0.0006561279296875
+  },
+  "sep2_median_early": 0.11064079952968842,
+  "sep2_median_late": 0.7148907103825137,
+  "medians_high": {
+   "hNL_early": 18.0,
+   "hNL_late": 20.0,
+   "hD_early": 17.0,
+   "hD_late": 17.5,
+   "apeNL_late": 3.7790956755337044,
+   "apeD_late": 3.0282148051810642
+  },
+  "medians_low": {
+   "hNL_early": 18.0,
+   "hNL_late": 18.0,
+   "hD_early": 17.0,
+   "hD_late": 18.0,
+   "apeNL_late": 2.326011824196283,
+   "apeD_late": 2.4453610624343707
+  }
+ },
+ "robustness": {
+  "alt_periods": {
+   "H1": {
+    "pos": 18,
+    "n": 18,
+    "p": 3.814697265625e-06
+   },
+   "H2": {
+    "pos": 12,
+    "n": 13,
+    "p": 0.001708984375
+   },
+   "H3": {
+    "pos": 12,
+    "n": 19,
+    "p": 0.359283447265625
+   }
+  },
+  "H3_excl_PJM_CISO": {
+   "pos": 10,
+   "n": 17,
+   "p": 0.629058837890625
+  },
+  "thr10": {
+   "H1": {
+    "pos": 9,
+    "n": 9,
+    "p": 0.001953125
+   },
+   "H2": {
+    "pos": 7,
+    "n": 8,
+    "p": 0.03515625
+   },
+   "H3": {
+    "pos": 6,
+    "n": 10,
+    "p": 0.75390625
+   },
+   "n": 10
+  }
+ },
+ "descriptive": {
+  "n_bas": 36,
+  "n_high": 18,
+  "n_low": 18,
+  "high": [
+   "AZPS",
+   "CISO",
+   "CPLE",
+   "EPE",
+   "ERCO",
+   "FPC",
+   "FPL",
+   "IPCO",
+   "LDWP",
+   "NEVP",
+   "PACE",
+   "PNM",
+   "PSCO",
+   "SCEG",
+   "SOCO",
+   "SRP",
+   "TEC",
+   "TEPC"
+  ],
+  "low": [
+   "AVA",
+   "BANC",
+   "BPAT",
+   "CPLW",
+   "DUK",
+   "FMPP",
+   "ISNE",
+   "JEA",
+   "LGEE",
+   "MISO",
+   "NWMT",
+   "NYIS",
+   "PACW",
+   "PJM",
+   "SC",
+   "SWPP",
+   "TVA",
+   "WACM"
+  ]
+ }
+}

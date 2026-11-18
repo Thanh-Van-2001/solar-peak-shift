@@ -73,3 +73,13 @@ Holm over the four p-values at family alpha 0.05.
 
 out/results.json (every number in the paper through generated macros), out/ba_table.csv,
 figures. A pipeline check (one BA, 2019 and 2025) runs before the full run.
+
+## Amendment 1 (18 November 2026, after the first full run)
+
+The plan set wind to zero for a BA whose wind column is almost always empty, but had no such rule for
+solar. Five BAs of the primary sample (AECI, GCPD, PGE, SCL, TPWR) report no solar generation, and PSEI
+reports solar only from November 2021 at 0.1% of demand, so their net load was undefined and they fell out.
+Change: a source (solar or wind) that a BA reports in fewer than 1% of hours, or whose 2025 energy share is
+below 1%, counts as zero when missing. This affects only the low-solar group, hence only H4; H1 to H3 use the
+high-solar group alone. WALC (6.6% solar) stays out because its solar and wind series have gaps that cannot
+be set to zero. First-run results are kept in out/v1.

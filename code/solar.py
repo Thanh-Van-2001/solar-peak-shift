@@ -41,6 +41,11 @@ def prep(g, ba):
     if cov.loc[ba, "wind_present"] < 0.01:
         g["wind"] = 0.0
     g["wind"] = g["wind"].clip(lower=0)
+    # amendment 1: a source absent from the BA's reports, or below 1% of its 2025 demand, counts as 0 when missing
+    for c in ("solar", "wind"):
+        share = cov.loc[ba, f"{c}_share_2025"]
+        if cov.loc[ba, f"{c}_present"] < 0.01 or not np.isfinite(share) or share < 0.01:
+            g[c] = g[c].fillna(0.0)
     g["nl"] = g["demand"] - g["solar"].fillna(np.nan) - g["wind"]
     return g.dropna(subset=["date"])
 
