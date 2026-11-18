@@ -10,7 +10,6 @@ import urllib.request
 
 UA = {"User-Agent": "ref-check/0.1 (academic reference verification)"}
 DOIS = {
-    "denholm2015duck": "10.2172/1226167",
     "kroposki2017renewable": "10.1109/mpe.2016.2637122",
     "wang2018netload": "10.1109/tpwrs.2017.2762599",
     "kaur2016benefits": "10.1016/j.renene.2015.09.011",

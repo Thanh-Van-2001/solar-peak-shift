@@ -23,6 +23,11 @@ for f in sorted(glob.glob(os.path.join(RAW, "EIA930_BALANCE_*.csv"))):
     out = pd.DataFrame({"ba": df["Balancing Authority"], "date": df["Data Date"], "hour": pd.to_numeric(df["Hour Number"], errors="coerce"),
                         "utc_end": df["UTC Time at End of Hour"], "demand": num("Demand (MW)"), "forecast": num("Demand Forecast (MW)")})
     out["solar"] = pd.concat([num(c) for c in sol], axis=1).sum(axis=1, min_count=1) if sol else float("nan")
+    # amendment 2: keep solar without integrated storage separately (older files: the single Solar column)
+    ns = [c for c in sol if "with Integrated" not in c]
+    ws = [c for c in sol if "with Integrated" in c]
+    out["solar_ns"] = pd.concat([num(c) for c in ns], axis=1).sum(axis=1, min_count=1) if ns else float("nan")
+    out["solar_ws"] = pd.concat([num(c) for c in ws], axis=1).sum(axis=1, min_count=1) if ws else float("nan")
     out["wind"] = pd.concat([num(c) for c in wnd], axis=1).sum(axis=1, min_count=1) if wnd else float("nan")
     parts.append(out)
 d = pd.concat(parts, ignore_index=True)

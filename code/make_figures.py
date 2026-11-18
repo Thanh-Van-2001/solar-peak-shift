@@ -27,7 +27,7 @@ ax.scatter(x, T["hD_late"] - T["hD_early"] + jit, s=14, facecolor="none", edgeco
            label="demand peak, all BAs")
 ax.axvline(5, color="#bbbbbb", lw=0.7, ls="--")
 ax.axhline(0, color="#444444", lw=0.6)
-for b in ("ERCO", "PNM", "CISO", "FPL"):
+for b in ("ERCO", "PNM", "CISO", "FPL", "MISO", "PJM", "SC"):
     if b in T.index:
         ax.annotate(b, (x[b], T.loc[b, "shift_NL"]), xytext=(4, 3), textcoords="offset points", fontsize=6)
 ax.set_xlabel("Utility solar share of 2025 demand (%)")

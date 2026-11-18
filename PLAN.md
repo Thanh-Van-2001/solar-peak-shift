@@ -83,3 +83,19 @@ Change: a source (solar or wind) that a BA reports in fewer than 1% of hours, or
 below 1%, counts as zero when missing. This affects only the low-solar group, hence only H4; H1 to H3 use the
 high-solar group alone. WALC (6.6% solar) stays out because its solar and wind series have gaps that cannot
 be set to zero. First-run results are kept in out/v1.
+
+## Amendment 2 (19 November 2026, after an internal review)
+
+No code bug was found. Exploratory checks added after the results (code/robustness2.py, out/robustness2.json):
+- Net load as demand minus solar only and minus wind only; solar without integrated storage (the extract now keeps
+  that column separately).
+- Days required complete in demand and net load only (the main rule also requires the forecast).
+- 2019 against 2025; month-stratified shifts; without the BAs that do not observe daylight saving time.
+- Mean peak hour with a bootstrap interval over BAs; share of days with the net-load peak at hour ending 20 or later;
+  Spearman correlation of the shift with solar share.
+- H3 at fixed hours (each BA's late-period median hours) instead of each day's realised peak hour, which selects on
+  the outcome.
+- A check of solar timestamps (hour of the median daily solar maximum, night-time solar share) and H1/H2 without
+  the BAs whose solar series look misaligned (night share above 5% or a drift of three hours or more).
+- A swap of median profiles: early demand with late solar and wind, and the reverse.
+Undisclosed rule now stated: a BA needs at least 30 complete days in each period (this removes WALC).
