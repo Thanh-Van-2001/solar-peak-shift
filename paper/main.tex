@@ -1,0 +1,174 @@
+\documentclass[conference,a4paper]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\input{macros}
+\newcommand{\repoURL}{https://github.com/Thanh-Van-2001/solar-peak-shift}
+
+\begin{document}
+
+\title{Utility Solar Is Moving the Net-Load Peak: Evidence from 42 U.S. Balancing Authorities, 2019--2026}
+
+\author{\IEEEauthorblockN{Thanh Van Nguyen}
+\IEEEauthorblockA{Tsinghua Shenzhen International Graduate School, Tsinghua University, Shenzhen, China\\
+felicenguyen2001@gmail.com}}
+
+\maketitle
+
+\begin{abstract}
+Utility-scale solar moves the hour at which net load (demand minus solar and wind) peaks into the evening, when dispatchable capacity must ramp up. Using hourly EIA-930 data for \res{nBas} U.S. balancing authorities (BAs) and a pre-specified analysis plan, we compare the summers of 2019--2020 with those of 2025--2026. In the \res{nHigh} BAs where utility solar supplied at least 5\% of 2025 demand, the median hour of the daily net-load peak moved later in all \res{hOneN} BAs with a change (median hour ending \res{highHnlearly} to \res{highHnllate}; Holm $p\res{hOneHolm}$). The gap between the net-load and demand peaks widened in \res{hTwoPos} of \res{hTwoN}, and the shift exceeded that of low-solar BAs (median \res{shiftHigh} against \res{shiftLow} hours; Holm $p\res{hFourHolm}$). The three-hour ramp into the net-load peak roughly doubled, from \res{rampEarly}\% to \res{rampLate}\% of the peak. Net-load peaks at least two hours after the demand peak rose from \res{sepEarly}\% to \res{sepLate}\% of days. The operators' published demand forecast was not systematically less accurate at the net-load peak hour than at the demand peak hour (worse in \res{hThreePos} of \res{hThreeN} BAs; $p\res{hThreeP}$). Evening ramping and the net-load peak, not the demand peak, are now where summer adequacy is decided in solar-rich BAs, and forecast evaluation should follow.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Solar energy, net load, peak demand, load forecasting, EIA-930.
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+As utility-scale solar grows, the residual demand that other resources must meet, the net load, falls at midday and peaks after sunset. California's ``duck curve'' made this familiar \cite{denholm2015duck}. Operating a grid with high shares of variable generation means planning for the evening ramp and the net-load peak rather than the demand peak \cite{kroposki2017renewable}. Forecasting work has followed, with net-load and solar forecasts for single systems \cite{wang2018netload,kaur2016benefits}.
+
+How far the net-load peak has moved across the U.S. is less documented. Since July 2018, Form EIA-930 has reported hourly utility solar and wind generation for every BA in the Lower 48, next to demand and the BA's own day-ahead demand forecast \cite{eia930}. These files make a national comparison possible.
+
+We use them, with an analysis plan committed to version control before any peak hour was computed, to ask three questions:
+\begin{enumerate}
+\item How far has the summer net-load peak moved between 2019--2020 and 2025--2026?
+\item Has it separated from the demand peak?
+\item Is the operators' demand forecast less accurate at the hour that now matters, the net-load peak?
+\end{enumerate}
+
+\section{Data and Methods}
+
+\subsection{Data and sample}
+We use hourly demand $D$, demand forecast $F$, utility solar $S$ (with and without integrated storage) and wind $W$ from the EIA-930 BALANCE files (November 2026 vintage), with the local date and hour.
+
+\emph{Screening.} As in our other EIA-930 studies, values of $D$ or $F$ that are non-positive or outside $[0.3,2]$ times the centred 168-hour median of demand are set to missing \cite{ruggles2020eia}, and negative $S$ or $W$ are set to zero. Net load is $\mathrm{NL}=D-S-W$.
+
+\emph{Sample.} It starts from a fixed set of \res{nPrimary} BAs with median demand of at least 500~MW and near-complete demand and forecast series. The high-solar group consists of the BAs whose utility solar supplied at least 5\% of 2025 demand: \res{nHigh} BAs, from \res{shareMinBa} (\res{shareMin}\%) to \res{shareMaxBa} (\res{shareMax}\%). The low-solar group has the other \res{nLow}. \res{dropped} was excluded because gaps in its solar and wind series leave too few complete days.
+
+\emph{Periods and days.} The early period is June to September of 2019 and 2020; the late period is June to September of 2025 and 2026 (2026 to September). A day is used if all its hours have $D$, $F$ and NL. This leaves \res{nDaysMin} to \res{nDaysMax} days per BA and period.
+
+\subsection{Quantities and hypotheses}
+For each day, $h_D$ and $h_{\mathrm{NL}}$ are the hours (local hour ending) of the daily maxima of $D$ and NL. The evening ramp is the increase of NL over the three hours before its peak, in percent of the peak. Forecast accuracy is the absolute percentage error $100|F-D|/D$ at a given hour. The plan fixed four hypotheses, with the BA as the unit:
+\begin{itemize}
+\item H1: in the high-solar group, the median $h_{\mathrm{NL}}$ is later in the late period than in the early period in a majority of BAs.
+\item H2: in the high-solar group, the gap between median $h_{\mathrm{NL}}$ and median $h_D$ grows.
+\item H3: in the high-solar group in the late period, the forecast error at $h_{\mathrm{NL}}$ differs from that at $h_D$.
+\item H4: the shift in median $h_{\mathrm{NL}}$ is larger in the high-solar group than in the low-solar group.
+\end{itemize}
+H1 and H2 use one-sided and H3 two-sided sign tests (ties dropped). H4 uses a one-sided Mann--Whitney test \cite{mann1947test}. Holm's procedure adjusts the four \cite{holm1979simple}. A pipeline check ran on CISO for 2019 and 2025 before the full run.
+
+\emph{Amendment.} After the first full run, five low-solar BAs that report no solar generation had dropped out because their net load was undefined. The plan had a zero rule for wind only. We extended it to any source a BA does not report or that is below 1\% of its 2025 demand. This changes only the low-solar group, and hence only H4, which was supported before and after the change. Both runs are in the repository.
+
+\section{Results}
+
+Table~\ref{tab:hyp} summarises the four pre-specified tests.
+
+\begin{table}[t]
+\caption{Pre-specified hypotheses: BAs in the stated direction among those with a change, one- or two-sided $p$, Holm-adjusted $p$}
+\label{tab:hyp}
+\centering
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llccc}
+\toprule
+ & Statement (high-solar group) & BAs & $p$ & Holm \\
+\midrule
+H1 & net-load peak later & \res{hOnePos}/\res{hOneN} & $\res{hOnePT}$ & $\res{hOneHolmT}$ \\
+H2 & net-load minus demand peak grows & \res{hTwoPos}/\res{hTwoN} & $\res{hTwoPT}$ & $\res{hTwoHolmT}$ \\
+H3 & error at net-load vs demand peak & \res{hThreePos}/\res{hThreeN} & $\res{hThreePT}$ & $\res{hThreeHolmT}$ \\
+H4 & shift larger than low-solar & \res{nHigh} vs \res{nLow} & $\res{hFourPT}$ & $\res{hFourHolmT}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The net-load peak moved into the evening}
+H1 was supported. In all \res{hOneN} high-solar BAs whose median $h_{\mathrm{NL}}$ changed, it moved later ($p\res{hOneP}$, Holm $p\res{hOneHolm}$). The group median moved from hour ending \res{highHnlearly} to \res{highHnllate}. The largest shift was \res{maxShift} hours, in \res{maxShiftBa} (Table~\ref{tab:bas}). H4 was supported too (Fig.~\ref{fig:shift}): the median shift was \res{shiftHigh} hour in the high-solar group and \res{shiftLow} in the low-solar group ($p\res{hFourP}$, Holm $p\res{hFourHolm}$). Among low-solar BAs, \res{lowShiftBas} also shifted by two hours or more; wind is part of their net load (MISO: \res{misoWind}\% of 2025 demand).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_shift.pdf}
+\caption{Change between the summers of 2019--2020 and 2025--2026 in the median hour of the daily net-load peak (filled) and demand peak (open), against the 2025 utility solar share. Points are jittered vertically by up to 0.12 hours. Dashed line: the 5\% threshold of the high-solar group.}
+\label{fig:shift}
+\end{figure}
+
+\begin{table}[t]
+\caption{High-solar BAs: 2025 utility solar share, median hour (ending) of the summer net-load and demand peaks and median three-hour evening ramp (\% of peak) in 2019--2020 $\to$ 2025--2026, and the late-period forecast error (\%) at the net-load / demand peak hour}
+\label{tab:bas}
+\centering
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrcccc}
+\toprule
+BA & Solar \% & NL peak & Demand peak & Ramp & Error NL / D \\
+\midrule
+\csname @@input\endcsname tab_bas.tex
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{It separated from the demand peak}
+H2 was supported. In the high-solar group the gap between the net-load and demand peaks grew in \res{hTwoPos} of \res{hTwoN} BAs with a change ($p\res{hTwoP}$, Holm $p\res{hTwoHolm}$). The median demand peak barely moved, from \res{highHdearly} to \res{highHdlate}. The secondary analyses show the consequence (Fig.~\ref{fig:cases}):
+\begin{itemize}
+\item The share of days on which the net-load peak came at least two hours after the demand peak rose from \res{sepEarly}\% to \res{sepLate}\% (group medians; higher in \res{sepPos} of \res{sepN} BAs, $p\res{sepP}$).
+\item The three-hour evening ramp into the net-load peak rose from \res{rampEarly}\% to \res{rampLate}\% of the peak (higher in \res{rampPos} of \res{rampN}, $p\res{rampP}$).
+\item In ERCOT the net-load peak moved from hour ending \res{ercoNlEarly} to \res{ercoNlLate}, and its ramp grew from \res{ercoRampEarly}\% to \res{ercoRampLate}\%.
+\end{itemize}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_cases.pdf}
+\caption{Median summer profiles of demand (grey) and net load (blue), each divided by its daily maximum, in 2019--2020 (dashed) and 2025--2026 (solid), for the three pre-specified case BAs.}
+\label{fig:cases}
+\end{figure*}
+
+\subsection{Forecast accuracy at the net-load peak}
+H3 was not supported. In the late period, the operators' demand forecast was worse at the net-load peak hour than at the demand peak hour in \res{hThreePos} of \res{hThreeN} high-solar BAs and better in \res{hThreeNeg} ($p\res{hThreeP}$). The group medians were \res{highApenllate}\% and \res{highApedlate}\%. The result holds without PJM and CISO, whose forecasts have known timestamp offsets (\res{exclThreePos} of \res{exclThreeN}, $p\res{exclThreeP}$).
+
+The hour-of-day profiles add a caution (Fig.~\ref{fig:error}). The median error of high-solar BAs rose from \res{errHighEarly}\% to \res{errHighLate}\% across most hours, while that of low-solar BAs fell from \res{errLowEarly}\% to \res{errLowLate}\%. But the error rose in only \res{errHighUp} of \res{errHighN} high-solar BAs, so this is not a uniform deterioration. Several BAs' forecasts have level gaps or data problems that dominate their errors (\res{levelBas}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_error.pdf}
+\caption{Median absolute percentage error of the operators' day-ahead demand forecast by hour of day, median over BAs of each BA's median, for the high- and low-solar groups in 2019--2020 (dashed) and 2025--2026 (solid).}
+\label{fig:error}
+\end{figure}
+
+\subsection{Robustness}
+The pre-specified variants agree. With three-year periods (2019--2021 against 2024--2026):
+\begin{itemize}
+\item the net-load peak moved later in \res{altOnePos} of \res{altOneN} high-solar BAs;
+\item the gap grew in \res{altTwoPos} of \res{altTwoN};
+\item the error at the net-load peak was worse in \res{altThreePos} of \res{altThreeN} ($p\res{altThreeP}$).
+\end{itemize}
+With a 10\% solar threshold, the counts are \res{tenOnePos} of \res{tenOneN}, \res{tenTwoPos} of \res{tenTwoN} and \res{tenThreePos} of \res{tenThreeN}.
+
+\section{Discussion}
+
+In the U.S. BAs with the most utility solar, the hour that sets summer scarcity has moved by one to four hours in six years. It now sits two hours or more after the demand peak on most days, and the climb into it is about twice as steep. Planning and operating processes keyed to the demand peak therefore look at the wrong hour. Examples are coincident-peak tariffs, demand response windows, reserve schedules and resource-adequacy accounting. The evening ramp, now often 15\% or more of the peak in three hours, is a requirement on flexible capacity and storage in its own right \cite{kroposki2017renewable}.
+
+The operators' published forecasts were not systematically worse at the new peak hour. This is reassuring, but it does not make demand-forecast accuracy the right target. Operators need net-load forecasts, which add solar and wind forecast errors that EIA-930 does not report \cite{wang2018netload,kaur2016benefits}. The rise in median errors in high-solar BAs is not uniform across them and deserves a closer, BA-specific look.
+
+\subsection*{Limitations}
+\begin{itemize}
+\item EIA-930 reports utility-scale solar only. Behind-the-meter solar lowers reported demand itself, so part of the solar effect is already inside $D$.
+\item Peak hours are integers, and two summers per period limit precision.
+\item The demand forecast is not a net-load forecast.
+\item \res{dropped} was excluded.
+\item Known data problems in some BAs' forecasts (timestamp offsets, level gaps) affect the error comparisons, though not the peak-hour results, which use only $D$, $S$ and $W$.
+\end{itemize}
+
+\section{Conclusion}
+Across \res{nHigh} solar-rich U.S. balancing authorities, the summer net-load peak moved about two hours later between 2019--2020 and 2025--2026, separated from the demand peak, and became steeper to reach. Forecast evaluation, tariffs and adequacy studies should move with it.
+
+\section*{Data and code availability}
+The analysis plan with its commit history and amendment, the code and the result files are available at \url{\repoURL}. The EIA-930 data are public.
+
+\section*{Acknowledgment}
+The author used Claude Opus 5.5 (Anthropic; model identifier claude-opus-5-5) to help write analysis code and draft and edit the text. The author checked the code, the results and the text and takes full responsibility for the content.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}
