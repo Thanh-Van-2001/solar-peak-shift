@@ -99,3 +99,37 @@ No code bug was found. Exploratory checks added after the results (code/robustne
   the BAs whose solar series look misaligned (night share above 5% or a drift of three hours or more).
 - A swap of median profiles: early demand with late solar and wind, and the reverse.
 Undisclosed rule now stated: a BA needs at least 30 complete days in each period (this removes WALC).
+
+## Amendment 3 (19 November 2026, exploratory, after an independent review)
+
+An independent automated review (AI-Scientist-v2 reviewer form) of the submitted paper asked why some low-solar
+BAs moved, for pre-trends, for a continuous peak-time measure and for a mechanical counterfactual. The checks
+below are written down before any of them is computed. All are exploratory; H1 to H4, the pre-specified secondary
+analyses and their results are unchanged. Code: code/robustness3.py, output out/robustness3.json.
+
+1. Low-solar BAs whose median net-load peak moved two hours or more (MISO, PJM, SC in the main run). For every BA:
+   the shift with solar only (D - S) and wind only (D - W) subtracted, as in Amendment 2; summer (June to September)
+   solar and wind energy as a share of demand in each period; the profile swap of Amendment 2; the gap in the
+   early-period median demand profile between the demand peak hour and the late-period net-load peak hour (how much
+   midday supply it takes to move the peak); the solar timestamp check of Amendment 2 (hour of the median daily solar
+   maximum, night-time share) by year; and the offset between the local hour number and UTC by summer (a clock
+   change would move every series). Known forecast offsets (PJM from February 2019, SC from August 2025) concern the
+   forecast column only, so they cannot move a peak hour; they matter only for forecast errors.
+2. Pre-trend placebo: July to September 2018 (generation by source starts in July 2018) against July to September
+   2019, same day rule and screening. Per-BA shift in median and mean net-load peak hour; sign test in the
+   high-solar group and Mann-Whitney test high against low, as for H1 and H4. For comparison, the main contrast
+   restricted to July to September.
+3. Continuous peak time. For each day, the vertex of the parabola through net load at the peak hour and the hours
+   either side (left at the integer hour when the peak is at the first or last hour of the day). Per BA, the median
+   over days in each period; shift; sign and Wilcoxon signed-rank tests in the high-solar group, Mann-Whitney high
+   against low. Also the circular mean of the daily integer peak hour (24-hour circle).
+4. Mechanical counterfactual. From median summer profiles by hour in each period: the observed peak hour of
+   D_late - S_late - W_late against (a) the early profile D_early - S_early - W_early, (b) the swap D_early - S_late -
+   W_late (Amendment 2) and (c) D_late - k_S S_early - k_W W_early, with k the ratio of late- to early-period mean
+   summer output of each source (early shapes, late volumes). Peak times of the profiles by the same parabolic
+   vertex. Reported: predicted against observed shift per BA.
+5. Forecast data quality and H3. For each BA and summer, the shift of the forecast (-3 to +3 hours) that minimises
+   the median absolute percentage error against demand. H3, at realised and at fixed hours, without CISO (forecast
+   offset in summer 2025), FPC and PSCO (forecast level gaps) and AZPS, EPE and SRP (suspect solar timestamps,
+   which set the hour at which the error is read). The pre-specified H3 robustness without PJM and CISO is computed
+   by code/solar.py but was not reported; it is now reported.
