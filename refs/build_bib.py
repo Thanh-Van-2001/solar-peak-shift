@@ -16,8 +16,17 @@ DOIS = {
     "ruggles2020eia": "10.1038/s41597-020-0483-x",
     "hong2016probabilistic": "10.1016/j.ijforecast.2015.11.011",
     "mann1947test": "10.1214/aoms/1177730491",
+    # closest prior work (positioning), each checked against its Crossref record and abstract
+    "mills2013value": "10.1109/jphotov.2013.2263984",
+    "lave2016comparison": "10.1109/pvsc.2016.7749939",
+    "shaker2016impacts": "10.1016/j.rser.2015.12.287",
+    "huang2018ramp": "10.1109/pesgm.2018.8585852",
+    "hou2019probabilistic": "10.1016/j.apenergy.2019.03.067",
+    "millstein2021value": "10.1016/j.joule.2021.05.009",
+    "ruggles2022peak": "10.1016/j.apenergy.2021.117773",
 }
-TITLE_FIX = {"California": "{C}alifornia", "Duck": "{D}uck", "PV": "{PV}", "100% Renewable": r"100\% Renewable","THE USE OF CONFIDENCE OR FIDUCIAL LIMITS ILLUSTRATED IN THE CASE OF THE BINOMIAL": "The use of confidence or fiducial limits illustrated in the case of the binomial",
+TITLE_FIX = {"California": "{C}alifornia", "Duck": "{D}uck", "PV": "{PV}", "100% Renewable": r"100\% Renewable",
+             "׳": "'", "United States": "{U}nited {S}tates", "China": "{C}hina","THE USE OF CONFIDENCE OR FIDUCIAL LIMITS ILLUSTRATED IN THE CASE OF THE BINOMIAL": "The use of confidence or fiducial limits illustrated in the case of the binomial",
              "THE TREATMENT OF TIES IN RANKING PROBLEMS": "The treatment of ties in ranking problems"}
 
 
@@ -42,6 +51,7 @@ for key, doi in DOIS.items():
     bib = re.sub(r"\s*url=\{[^}]*\},", "", bib)
     bib = re.sub(r",\s*month=\w+", "", bib)
     bib = bib.replace("&amp;", r"\&")
+    bib = re.sub(r"pages=\{(\w+)–(\w+)\}", r"pages={\1--\2}", bib)
     for a, b in TITLE_FIX.items():
         bib = bib.replace(a, b)
     t = re.search(r"title=\{(.*?)\},", bib)

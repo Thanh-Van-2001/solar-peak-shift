@@ -20,7 +20,7 @@ felicenguyen2001@gmail.com}}
 \maketitle
 
 \begin{abstract}
-Utility-scale solar moves the hour at which net load (demand minus solar and wind) peaks into the evening, when dispatchable capacity, storage and imports must ramp up. Using hourly EIA-930 data for \res{nBas} U.S. balancing authorities (BAs) and a pre-specified analysis plan, we compare the summers of 2019--2020 with those of 2025--2026. In the \res{nHigh} BAs where utility solar supplied at least 5\% of 2025 demand, the median hour of the daily net-load peak moved later in all \res{hOneN} BAs with a change (Holm $p\res{hOneHolm}$), by a median of \res{perBaMedianShift} hour per BA (mean \res{perBaMeanShift}). The share of days with the net-load peak at hour ending 20 or later rose from \res{lateTwentyEarly}\% to \res{lateTwentyLate}\%, the gap to the demand peak widened in \res{hTwoPos} of \res{hTwoN} BAs, and the shift exceeded that of low-solar BAs (Holm $p\res{hFourHolm}$). The shift comes from solar rather than wind, and it survives month stratification, a comparison of 2019 with 2025 and the exclusion of BAs with suspect solar timestamps. The median three-hour ramp into the net-load peak grew \res{rampRatio}-fold per BA. The operators' published demand forecast was not measurably less accurate at the net-load peak hour than at the demand peak hour. Peak-oriented tariffs, demand response and forecast evaluation in solar-rich BAs should follow the net-load peak.
+Utility-scale solar pushes the daily peak of net load (demand minus solar and wind) into the evening, when storage and dispatchable capacity must ramp up. Evidence comes mostly from single systems, chiefly California, or simulations; a multi-market assessment through 2020 found solar's net-load effects clear only in California and the Southwest. With hourly EIA-930 data for \res{nBas} U.S. balancing authorities (BAs) and a pre-specified plan, we compare the summers of 2019--2020 and 2025--2026 in high- and low-solar BAs, separate solar from wind, and score the operators' demand forecasts. In the \res{nHigh} BAs where utility solar supplied at least 5\% of 2025 demand, the median hour of the daily net-load peak moved later in all \res{hOneN} BAs with a change (Holm $p\res{hOneHolm}$), by a median of \res{perBaMedianShift} hour per BA (mean \res{perBaMeanShift}). The share of days with the net-load peak at hour ending 20 or later rose from \res{lateTwentyEarly}\% to \res{lateTwentyLate}\%, the gap to the demand peak widened in \res{hTwoPos} of \res{hTwoN} BAs, and the shift exceeded that of low-solar BAs (Holm $p\res{hFourHolm}$). Exploratory checks attribute the shift to solar, not wind; it survives month stratification, 2019 against 2025, and excluding BAs with suspect solar timestamps. The median three-hour ramp into the net-load peak grew \res{rampRatio}-fold per BA. The operators' demand forecast was not measurably less accurate at the net-load peak hour than at the demand peak hour. Peak-oriented tariffs, demand response and forecast evaluation in solar-rich BAs should follow the net-load peak.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -29,15 +29,18 @@ Solar energy, net load, peak demand, load forecasting, EIA-930.
 
 \section{Introduction}
 
-As utility-scale solar grows, the residual demand that other resources must meet, the net load, falls at midday and peaks after sunset. California's ``duck curve'' made this familiar \cite{denholm2015duck}. A grid with high shares of variable generation has to be planned and operated around the evening ramp and the net-load peak rather than the demand peak, with storage and flexible converters taking a growing part \cite{kroposki2017renewable}. Forecasting work has followed, with net-load and solar forecasts for single systems \cite{wang2018netload,kaur2016benefits}.
+As utility-scale solar grows, the residual demand that other resources must meet, the net load, falls at midday and peaks after sunset. California's ``duck curve'' made this familiar \cite{denholm2015duck}. A grid with high shares of variable generation has to be planned and operated around the evening ramp and the net-load peak rather than the demand peak, with storage and flexible converters taking a growing part \cite{kroposki2017renewable}.
 
-How far the net-load peak has moved across the U.S. is less documented. Since July 2018, Form EIA-930 has reported hourly utility-scale solar and wind generation for the BAs of the Lower 48 that have such plants, next to demand and the BA's own day-ahead demand forecast \cite{eia930}. These files make a national comparison possible.
+Three strands of work bear on where the net-load peak now falls. \emph{Model and scenario studies} project how solar reshapes net load at given penetrations: the duck chart for California \cite{denholm2015duck}, the fall in the capacity value of PV as its share rises \cite{mills2013value}, probabilistic duck and ramp curves for one Chinese province \cite{hou2019probabilistic}, and hypothetical residual loads built from a decade of load and weather data in four systems \cite{ruggles2022peak}. They model net load at chosen penetrations rather than track how it has changed. \emph{Observed single-system studies} measure the change in one place: California's net load and its 2016 net-load ramps \cite{shaker2016impacts,huang2018ramp}, and solar-only against wind-only net load in one utility balancing area \cite{lave2016comparison}; a recent review covers a decade of California's experience \cite{qiu2025duck}. Net-load and solar forecasting work is likewise system-specific \cite{wang2018netload,kaur2016benefits}. Without a comparison system, solar's effect is hard to separate from changes in weather or demand. \emph{Observed multi-region studies} come closest. Berkeley Lab's Solar-to-Grid assessment of the seven U.S. ISO markets and ten other utilities, with data through 2020, found the duck-curve shape clear in CAISO and in some Southwestern utilities; the other ISOs had solar shares of 3\% or less, and solar's effects there were much less obvious \cite{mills2021solar2grid}. Plant-level data from the same markets show solar's value falling where its share is high, mainly because of its output profile \cite{millstein2021value}: a consequence of the timing shift, not a measure of it.
 
-We use them, with an analysis plan committed to version control before any peak hour was computed, to ask three questions:
+Solar has since spread beyond the West. By 2025 utility solar supplied at least 5\% of demand in \res{nHigh} of the balancing authorities (BAs) we study, among them ERCOT and several in the Southeast (Table~\ref{tab:bas}). Since July 2018, Form EIA-930 has reported hourly utility-scale solar and wind generation for each BA of the Lower 48 that has such plants, next to demand and the BA's own day-ahead demand forecast \cite{eia930}. We found no study that uses these data to test, against BAs with little solar, whether the hour of the net-load peak has moved, whether solar or wind moved it, and how accurate the operators' forecasts are at the new peak hour.
+
+With an analysis plan committed to version control before any peak hour was computed, we ask how far the summer net-load peak moved between 2019--2020, the end of the Solar-to-Grid record, and 2025--2026; whether it separated from the demand peak; and whether the operators' demand forecast is less accurate at the net-load peak. The contributions are:
 \begin{enumerate}
-\item How far has the summer net-load peak moved between 2019--2020 and 2025--2026?
-\item Has it separated from the demand peak?
-\item Is the operators' demand forecast less accurate at the net-load peak?
+\item \emph{A pre-specified test across BAs.} In tests with the BA as the unit, a low-solar comparison group and Holm adjustment, the net-load peak moved later in all \res{hOneN} high-solar BAs whose peak hour changed, and further than in low-solar BAs. The share of days with the peak at hour ending 20 or later rose from \res{lateTwentyEarly}\% to \res{lateTwentyLate}\% (Section~\ref{sec:shift}).
+\item \emph{Separation from the demand peak.} The gap between the net-load and demand peaks grew in \res{hTwoPos} of \res{hTwoN} BAs, and the ramp into the net-load peak grew a median \res{rampRatio}-fold (Section~\ref{sec:sep}).
+\item \emph{Attribution with observed data.} The solar-only and wind-only comparison of \cite{lave2016comparison}, there a set of scenarios for one BA, is applied to observed data in many BAs. In exploratory checks the shift appears with solar alone in \res{SolOnePos} of \res{SolOneN} BAs but not significantly with wind alone, and a swap of profiles traces it to supply rather than demand (Section~\ref{sec:rob}).
+\item \emph{Operators' forecasts at the new peak.} A pre-specified test finds the published demand forecast not measurably less accurate at the net-load peak hour than at the demand peak hour; we report this negative result with its low power (Section~\ref{sec:fc}).
 \end{enumerate}
 
 \section{Data and Methods}
@@ -101,7 +104,7 @@ BA & Solar \% & NL peak & Demand peak & Ramp & Error NL / D \\
 \end{tabular}
 \end{table}
 
-\subsection{The net-load peak moved into the evening}
+\subsection{The net-load peak moved into the evening}\label{sec:shift}
 H1 was supported. In all \res{hOneN} high-solar BAs whose median $h_{\mathrm{NL}}$ changed, it moved later ($p\res{hOneP}$, Holm $p\res{hOneHolm}$). The per-BA shift had a median of \res{perBaMedianShift} hour and a mean of \res{perBaMeanShift} hours. The largest was \res{maxShift} hours, in \res{maxShiftBa}, and LDWP did not move. The group median moved from hour ending \res{highHnlearly} to \res{highHnllate}. Measured by the mean peak hour, the median BA's peak moved \res{meanShift} hours later (bootstrap 95\% interval over BAs \res{meanShiftLo} to \res{meanShiftHi}). The share of days with the net-load peak at hour ending 20 or later rose from \res{lateTwentyEarly}\% to \res{lateTwentyLate}\% (higher in \res{lateTwentyPos} of \res{lateTwentyN} BAs).
 
 H4 was supported (Fig.~\ref{fig:shift}): the median shift was \res{shiftHigh} hour in the high-solar group and \res{shiftLow} in the low-solar group ($p\res{hFourP}$, Holm $p\res{hFourHolm}$). Across all \res{nBas} BAs the shift rose with solar share (Spearman $\rho=\res{rhoAll}$, $p\res{rhoAllP}$). Within the low-solar group it did not ($\rho=\res{rhoLow}$), although \res{lowShiftBas} shifted by two hours or more.
@@ -113,7 +116,7 @@ H4 was supported (Fig.~\ref{fig:shift}): the median shift was \res{shiftHigh} ho
 \label{fig:shift}
 \end{figure}
 
-\subsection{It separated from the demand peak}
+\subsection{It separated from the demand peak}\label{sec:sep}
 H2 was supported: the gap between the net-load and demand peaks grew in \res{hTwoPos} of \res{hTwoN} high-solar BAs with a change ($p\res{hTwoP}$, Holm $p\res{hTwoHolm}$). The median demand peak barely moved, from \res{highHdearly} to \res{highHdlate}. Rooftop solar, which lowers reported demand at midday, would push the demand peak later too, so this test is conservative.
 
 The secondary analyses show the consequences (Fig.~\ref{fig:cases}):
@@ -130,7 +133,7 @@ The secondary analyses show the consequences (Fig.~\ref{fig:cases}):
 \label{fig:cases}
 \end{figure*}
 
-\subsection{Forecast accuracy at the net-load peak}
+\subsection{Forecast accuracy at the net-load peak}\label{sec:fc}
 H3 was not supported. In the late period, the operators' demand forecast was worse at each day's net-load peak hour than at its demand peak hour in \res{hThreePos} of \res{hThreeN} high-solar BAs ($p\res{hThreeP}$). The group medians were \res{highApenllate}\% and \res{highApedlate}\%.
 
 Measuring at the realised peak hour selects on the outcome. In an exploratory check at fixed hours, each BA's late-period median $h_D$ and $h_{\mathrm{NL}}$, the error was worse at the net-load hour in \res{fixPos} of \res{fixN} BAs (median difference \res{fixDiff} points, Wilcoxon $p\res{fixW}$). With \res{hThreeN} BAs the test has little power, so the data show no difference, not equality.
@@ -166,7 +169,9 @@ Exploratory checks added after an internal review address attribution and data q
 
 \section{Discussion}
 
-In the U.S. BAs with the most utility solar, the summer net-load peak has moved later by about an hour per BA in six years, and in ERCOT by four. It now falls at hour ending 20 or later on most days, often two hours or more after the demand peak, and the climb into it is steeper. Practices keyed to the demand peak are now aimed at a different hour from the net-load peak: coincident-peak tariffs, demand response windows and peak-oriented forecast evaluation. The steeper evening ramp is a requirement on flexible capacity, storage and the power electronics that connect them \cite{kroposki2017renewable}. This paper does not quantify those requirements.
+The direction of the shift is what the duck curve predicts \cite{denholm2015duck}; what this study adds is its size and breadth, measured against low-solar BAs and attributed to solar. It also extends the multi-market record, which through 2020 showed solar's net-load effects clearly only in CAISO and parts of the Southwest \cite{mills2021solar2grid}. In our early period, which ends with that record, ERCOT's median net-load peak was at hour ending \res{ercoNlEarly}; by 2025--2026 it was at \res{ercoNlLate}.
+
+In the U.S. BAs with the most utility solar, the summer net-load peak has moved later by about an hour per BA in six years. It now falls at hour ending 20 or later on most days, often two hours or more after the demand peak, and the climb into it is steeper. Practices keyed to the demand peak are now aimed at a different hour from the net-load peak: coincident-peak tariffs, demand response windows and peak-oriented forecast evaluation. The steeper evening ramp is a requirement on flexible capacity, storage and the power electronics that connect them \cite{kroposki2017renewable}. This paper does not quantify those requirements.
 
 The operators' published forecasts were not measurably worse at the net-load peak hour, but demand-forecast accuracy is not the target that matters there. Operators need net-load forecasts, which add solar and wind forecast errors that EIA-930 does not report \cite{wang2018netload,kaur2016benefits}.
 
@@ -180,7 +185,7 @@ The operators' published forecasts were not measurably worse at the net-load pea
 \end{itemize}
 
 \section{Conclusion}
-Across \res{nHigh} solar-rich U.S. balancing authorities, the summer net-load peak moved later by about an hour per BA between 2019--2020 and 2025--2026. It now lands at hour ending 20 or later on about two thirds of days and has separated from the demand peak. The shift is driven by solar and survives every check we ran. Tariffs, demand response and forecast evaluation should move with it.
+Across \res{nHigh} solar-rich U.S. balancing authorities, the summer net-load peak moved later by about an hour per BA between 2019--2020 and 2025--2026. It now lands at hour ending 20 or later on about two thirds of days and has separated from the demand peak. Unlike the single-system and model studies before it, this evidence comes from a pre-specified test across BAs against a low-solar comparison group. Exploratory checks attribute the shift to solar, and it survives every check we ran. Tariffs, demand response and forecast evaluation should move with it.
 
 \section*{Data and code availability}
 The analysis plan with its commit history and amendments, the code and the result files are available at \url{\repoURL}. The EIA-930 data are public.

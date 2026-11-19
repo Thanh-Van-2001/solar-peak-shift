@@ -20,6 +20,7 @@ def plain(s):
 
 
 a = plain(a)
+title = plain(title)
 open("paper/abstract_plain.txt", "w", encoding="utf-8").write(f"{title}\n\n{a}\n\nKeywords: {kw}\n")
 print(len(a.split()), "words,", len(a), "chars")
 print(title)
