@@ -13,6 +13,7 @@ plt.rcParams.update({"font.size": 7.5, "font.family": "serif", "axes.linewidth":
 BLUE, ORANGE, GRAY, GRID = "#0072B2", "#D55E00", "#888888", "#dddddd"
 T = pd.read_csv("out/ba_table.csv", index_col=0)
 rng = np.random.default_rng(1)
+NAME = {"ERCO": "ERCOT"}  # EIA code ERCO; the text uses ERCOT
 
 # Fig 1: shift of the median net-load peak hour (and demand peak hour) against 2025 solar share
 fig, ax = plt.subplots(figsize=(3.45, 2.5))
@@ -29,7 +30,8 @@ ax.axvline(5, color="#bbbbbb", lw=0.7, ls="--")
 ax.axhline(0, color="#444444", lw=0.6)
 for b in ("ERCO", "PNM", "CISO", "FPL", "MISO", "PJM", "SC"):
     if b in T.index:
-        ax.annotate(b, (x[b], T.loc[b, "shift_NL"]), xytext=(4, 3), textcoords="offset points", fontsize=6)
+        ax.annotate(NAME.get(b, b), (x[b], T.loc[b, "shift_NL"]), xytext=(-11, 3) if b == "SC" else (4, 3),
+                    textcoords="offset points", fontsize=6)
 ax.set_xlabel("Utility solar share of 2025 demand (%)")
 ax.set_ylabel("Shift of median peak hour (h)")
 ax.grid(color=GRID, lw=0.5)
@@ -47,7 +49,7 @@ for ax, b in zip(axs, cases):
         yrs = "2019-20" if per == "early" else "2025-26"
         ax.plot(s["hour"], s["d_n"], ls=ls, color=GRAY, lw=1.2, label=f"demand {yrs}")
         ax.plot(s["hour"], s["nl_n"], ls=ls, color=BLUE, lw=1.6, label=f"net load {yrs}")
-    ax.set_title(b, fontsize=7.5)
+    ax.set_title(NAME.get(b, b), fontsize=7.5)
     ax.set_xticks([1, 6, 12, 18, 24])
     ax.set_xlabel("Hour ending (local)")
     ax.grid(color=GRID, lw=0.5)

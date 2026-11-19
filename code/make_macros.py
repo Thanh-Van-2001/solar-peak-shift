@@ -72,7 +72,7 @@ M["levelBas"] = ", ".join(lvl[:-1]) + " and " + lvl[-1] if len(lvl) > 1 else "".
 rows = []
 for b, r in T[T["group"] == "high"].sort_values("solar_share_2025", ascending=False).iterrows():
     mark = r"$^\ddagger$" if b in ("AZPS", "EPE", "SRP") else ""
-    rows.append(f"{b}{mark} & {100 * r['solar_share_2025']:.0f} & {fh(r['hNL_early'])}$\\to${fh(r['hNL_late'])} & "
+    rows.append(f"{ {'ERCO': 'ERCOT'}.get(b, b)}{mark} & {100 * r['solar_share_2025']:.0f} & {fh(r['hNL_early'])}$\\to${fh(r['hNL_late'])} & "
                 f"{fh(r['hD_early'])}$\\to${fh(r['hD_late'])} & {r['ramp_early']:.0f}$\\to${r['ramp_late']:.0f} & "
                 f"{r['apeNL_late']:.1f} / {r['apeD_late']:.1f} \\\\")
 open("paper/tab_bas.tex", "w", encoding="utf-8").write("\n".join(rows) + "\n")
@@ -124,6 +124,65 @@ M["rampRatio"] = f((Hg2["ramp_late"] / Hg2["ramp_early"]).median(), 1)
 M["rampFell"] = " and ".join(sorted(Hg2.index[Hg2["ramp_late"] < Hg2["ramp_early"]]))
 M["sepMajLate"], M["sepMajEarly"] = str(int((Hg2["sep2_late"] > 0.5).sum())), str(int((Hg2["sep2_early"] > 0.5).sum()))
 M["hFourU"] = f(H["H4"]["U"], 1)
+
+# ---- amendment 3 (exploratory, after an independent review; code/robustness3.py) ----
+R3 = json.load(open("out/robustness3.json"))
+P3 = pd.read_csv("out/robustness3_ba.csv", index_col=0)
+SC3 = pd.read_csv("out/forecast_offset_scan.csv", index_col=0)
+assert R3["check_max_abs_diff_vs_main"] == 0.0 and R3["utc_offset_changes"] == []
+movers = ["MISO", "PJM", "SC"]
+assert sorted(T.index[(T["group"] == "low") & (T["shift_NL"] >= 2)]) == movers
+for b in movers:
+    t, r = b.lower(), P3.loc[b]
+    assert r["main_hD_shift"] == 0 and r["sol_shift"] == r["main_shift"]
+    M[f"{t}SolL"], M[f"{t}Gap"], M[f"{t}Drop"] = f(100 * r["solar_share_l"]), f(r["d_gap_pct"]), f(r["s_drop_pct"])
+    M[f"{t}SolShift"], M[f"{t}WndShift"] = fh(r["sol_shift"]), fh(r["wnd_shift"])
+    M[f"{t}HdPk"], M[f"{t}NlPk"] = str(int(r["hD_prof_e"])), str(int(r["hNL_late_used"]))
+    M[f"{t}Obs"], M[f"{t}Mech"] = f(r["prof_obs_shift"]), f(r["mech_shift"])
+assert P3.loc[movers, "hD_prof_e"].nunique() == 1  # the text says "in all three"
+# the text: solar drop "more than the gap in MISO and PJM, about as much in SC"; AZPS "has no early wind"
+assert all(P3.loc[b, "s_drop_pct"] > P3.loc[b, "d_gap_pct"] for b in ("MISO", "PJM"))
+assert abs(P3.loc["SC", "s_drop_pct"] - P3.loc["SC", "d_gap_pct"]) < 0.5 and P3.loc["AZPS", "wind_share_e"] == 0
+assert P3.loc["SC", "solar_night_2025"] < 0.001  # the text says "almost none in 2025"
+M["moverSolE"] = f(100 * P3.loc[movers, "solar_share_e"].max())
+M["scHmaxEarly"], M["scHmaxLate"] = fh(P3.loc["SC", "solar_hmax_2019"]), fh(P3.loc["SC", "solar_hmax_2025"])
+M["scNight"] = f(100 * P3.loc["SC", ["solar_night_2018", "solar_night_2019", "solar_night_2020"]].max(), 0)
+M["scSolE"] = f(100 * P3.loc["SC", "solar_share_e"], 2)
+assert P3.loc["PJM", [f"solar_hmax_{y}" for y in range(2019, 2025)]].nunique() == 1  # "moved ... in 2025"
+assert P3.loc["PJM", "solar_hmax_2025"] == P3.loc["PJM", "solar_hmax_2026"] != P3.loc["PJM", "solar_hmax_2024"]
+M["pjmHmaxEarly"], M["pjmHmaxLate"] =fh(P3.loc["PJM", "solar_hmax_2019"]), fh(P3.loc["PJM", "solar_hmax_2025"])
+pt = R3["pretrend"]
+M["preOnePos"], M["preOneN"], M["preOneP"] = str(pt["H1"]["pos"]), str(pt["H1"]["n"]), pv(pt["H1"]["p"])
+M["preVtxHigh"], M["preVtxLow"] = f(pt["median_vtx_shift_high"], 2), f(pt["median_vtx_shift_low"], 2)
+M["preMwVtxP"], M["preMwP"] = pv(pt["H4_vtx"]["p"]), pv(pt["H4"]["p"])
+M["preNHigh"], M["preNLow"] = str(pt["n_high"]), str(pt["n_low"])
+M["preSolHigh"] = f(100 * pt["solar_share_high_2018"])
+vx = R3["vertex"]
+M["vtxPos"], M["vtxN"], M["vtxP"], M["vtxW"] = str(vx["H1"]["pos"]), str(vx["H1"]["n"]), pv(vx["H1"]["p"]), pv(vx["wilcoxon_p"])
+M["vtxMed"], M["vtxMin"], M["vtxMax"], M["vtxLow"] = f(vx["median_shift_high"]), f(vx["min_shift_high"]), f(vx["max_shift_high"]), f(vx["median_shift_low"])
+M["vtxMwP"], M["vtxEarly"], M["vtxLate"] = pv(vx["H4"]["p"]), f(vx["median_early_high"]), f(vx["median_late_high"])
+M["vtxPerYear"] = f(vx["median_shift_high"] / 6, 2)
+cr = R3["circular"]
+M["circMed"], M["circLow"], M["circMwP"] = f(cr["median_shift_high"]), f(cr["median_shift_low"]), pv(cr["H4"]["p"])
+mc = R3["mechanical"]
+M["mechN"], M["mechObs"], M["mechPred"], M["mechSwap"] = str(mc["n"]), f(mc["median_obs"]), f(mc["median_mech"]), f(mc["median_swap_supply"])
+M["mechWithin"], M["mechAbs"], M["mechRho"], M["mechKs"] = str(mc["within_half_hour"]), f(mc["median_abs_diff"], 2), f(mc["spearman"], 2), f(mc["median_kS"])
+Hm3 = P3.loc[T.index[T["group"] == "high"]]
+out3 = sorted(Hm3.index[(Hm3["prof_obs_shift"] - Hm3["mech_shift"]).abs() > 0.5])
+M["mechOut"] = " and ".join(out3)
+M["mechMissing"] = " and ".join(sorted(Hm3.index[Hm3["mech_shift"].isna()]))
+e3 = R3["H3_excl"]
+for k, tag in (("fcast_realised", "Fc"), ("fcast_fixed", "FcFix"), ("all_realised", "All"), ("all_fixed", "AllFix")):
+    M[f"hThree{tag}Pos"], M[f"hThree{tag}N"], M[f"hThree{tag}P"] = str(e3[k]["pos"]), str(e3[k]["n"]), pv(e3[k]["p"])
+sc = SC3.set_index(["ba", "year"])
+M["pjmFcA"] = f(sc.loc["PJM", "ape0"].median())
+M["pjmFcB"] = f(sc.loc["PJM", "ape_best"].median())
+assert (sc.loc["PJM", "best"] == 1).all() and (sc.loc[("CISO", slice(2022, 2025)), "best"] == 1).all()
+M["cisoFcA"] = f(sc.loc[("CISO", slice(2022, 2025)), "ape0"].median())
+M["cisoFcB"] = f(sc.loc[("CISO", slice(2022, 2025)), "ape_best"].median())
+M["azpsFcE"] = f(sc.loc[("AZPS", slice(2019, 2024)), "ape0"].median())
+M["azpsFcL"] = f(sc.loc[("AZPS", slice(2025, 2026)), "ape0"].median())
+M["scFcE"] = f(sc.loc[("SC", slice(2019, 2020)), "ape0"].median())
 for k in [k for k, v in M.items() if (k.endswith("P") or k.endswith("Holm")) and v[:1] in "=<"]:
     M[k + "T"] = M[k][1:] if M[k][0] == "=" else "<" + M[k][1:]
 with open("paper/macros.tex", "w", encoding="utf-8") as fh:

@@ -1,0 +1,318 @@
+{
+ "check_max_abs_diff_vs_main": 0.0,
+ "low_movers": {
+  "MISO": {
+   "main_shift": 3.0,
+   "main_hD_shift": 0.0,
+   "sol_shift": 3.0,
+   "wnd_shift": 0.0,
+   "solar_share_e": 0.001156711079437925,
+   "solar_share_l": 0.0654466708146447,
+   "wind_share_e": 0.07225324076956867,
+   "wind_share_l": 0.08617770812992541,
+   "swap_supply_shift": 2.3290047623178545,
+   "swap_demand_shift": -0.3566525266509295,
+   "mech_shift": 2.400272324160184,
+   "prof_obs_shift": 2.40743954303883,
+   "d_gap_pct": 5.264844308106063,
+   "s_drop_pct": 10.125751145102324,
+   "w_drop_pct": 0.17964449300331975,
+   "hD_prof_e": 17,
+   "hNL_late_used": 20,
+   "utc_offsets": "5",
+   "solar_hmax_2019": 13.0,
+   "solar_night_2019": 2.3067695998523667e-05,
+   "solar_hmax_2020": 13.0,
+   "solar_night_2020": 0.0011277328606223067,
+   "solar_hmax_2021": 13.0,
+   "solar_night_2021": 0.0014124684325978359,
+   "solar_hmax_2022": 13.0,
+   "solar_night_2022": 0.0055529563356624045,
+   "solar_hmax_2023": 13.0,
+   "solar_night_2023": 0.0010081447933133739,
+   "solar_hmax_2024": 13.0,
+   "solar_night_2024": 0.0005372371835383864,
+   "solar_hmax_2025": 13.0,
+   "solar_night_2025": 0.00050433641450392,
+   "solar_hmax_2026": 13.0,
+   "solar_night_2026": 0.00053599793652387,
+   "solar_hmax_2018": 13.0,
+   "solar_night_2018": 4.826824271417692e-05
+  },
+  "PJM": {
+   "main_shift": 2.0,
+   "main_hD_shift": 0.0,
+   "sol_shift": 2.0,
+   "wnd_shift": 0.0,
+   "solar_share_e": 0.004327250162842244,
+   "solar_share_l": 0.038294798820896016,
+   "wind_share_e": 0.01778453319451862,
+   "wind_share_l": 0.018544609330500627,
+   "swap_supply_shift": 1.2212721373083824,
+   "swap_demand_shift": 0.3015786091302637,
+   "mech_shift": 1.2443734935966901,
+   "prof_obs_shift": 2.06565004400305,
+   "d_gap_pct": 5.004243761670344,
+   "s_drop_pct": 5.821592259378713,
+   "w_drop_pct": 0.06238329655406552,
+   "hD_prof_e": 17,
+   "hNL_late_used": 20,
+   "utc_offsets": "4",
+   "solar_hmax_2019": 12.0,
+   "solar_night_2019": 0.011058616356568289,
+   "solar_hmax_2020": 12.0,
+   "solar_night_2020": 0.007291155131094381,
+   "solar_hmax_2021": 12.0,
+   "solar_night_2021": 0.003434399595666987,
+   "solar_hmax_2022": 12.0,
+   "solar_night_2022": 0.003145544488435896,
+   "solar_hmax_2023": 12.0,
+   "solar_night_2023": 0.0019736744899072757,
+   "solar_hmax_2024": 12.0,
+   "solar_night_2024": 0.002982844027551309,
+   "solar_hmax_2025": 13.0,
+   "solar_night_2025": 0.0015559216715863252,
+   "solar_hmax_2026": 13.0,
+   "solar_night_2026": 0.0032693765786640113,
+   "solar_hmax_2018": null,
+   "solar_night_2018": null
+  },
+  "SC": {
+   "main_shift": 2.0,
+   "main_hD_shift": 0.0,
+   "sol_shift": 2.0,
+   "wnd_shift": 0.0,
+   "solar_share_e": 0.00044960267476495556,
+   "solar_share_l": 0.031592984130428194,
+   "wind_share_e": 0.0,
+   "wind_share_l": 0.0,
+   "swap_supply_shift": 0.8073692248949982,
+   "swap_demand_shift": -0.5940740740740722,
+   "mech_shift": -1.3473308157367487,
+   "prof_obs_shift": 1.4413105413105427,
+   "d_gap_pct": 3.2826148210763595,
+   "s_drop_pct": 2.9585798816568047,
+   "w_drop_pct": 0.0,
+   "hD_prof_e": 17,
+   "hNL_late_used": 19,
+   "utc_offsets": "4",
+   "solar_hmax_2019": 17.0,
+   "solar_night_2019": 0.10967344423906346,
+   "solar_hmax_2020": 17.0,
+   "solar_night_2020": 0.10357675111773472,
+   "solar_hmax_2021": 13.0,
+   "solar_night_2021": 0.0,
+   "solar_hmax_2022": 13.5,
+   "solar_night_2022": 0.0,
+   "solar_hmax_2023": 13.0,
+   "solar_night_2023": 0.0,
+   "solar_hmax_2024": 13.0,
+   "solar_night_2024": 0.0,
+   "solar_hmax_2025": 13.0,
+   "solar_night_2025": 8.531112968997936e-06,
+   "solar_hmax_2026": 13.0,
+   "solar_night_2026": 0.0,
+   "solar_hmax_2018": 17.0,
+   "solar_night_2018": 0.11059640995946729
+  }
+ },
+ "low_group": {
+  "sol": {
+   "pos": 16,
+   "n": 16,
+   "p": 1.52587890625e-05
+  },
+  "wnd": {
+   "pos": 6,
+   "n": 6,
+   "p": 0.015625
+  },
+  "median_solar_share_l": 0.01699061141652425
+ },
+ "utc_offset_changes": [],
+ "pretrend": {
+  "H1": {
+   "pos": 8,
+   "n": 9,
+   "p": 0.01953125
+  },
+  "H1_two_sided": {
+   "pos": 8,
+   "n": 9,
+   "p": 0.0390625
+  },
+  "low": {
+   "pos": 5,
+   "n": 7,
+   "p": 0.453125
+  },
+  "median_shift_high": 0.25,
+  "median_shift_low": 0.0,
+  "median_mean_shift_high": 0.2104156712852383,
+  "median_mean_shift_low": -0.07777777777777928,
+  "median_vtx_shift_high": 0.2549115769669221,
+  "median_vtx_shift_low": 0.07272256728778714,
+  "H4": {
+   "U": 207.0,
+   "p": 0.09220794744317234,
+   "n_high": 16,
+   "n_low": 21,
+   "median_high": 0.25,
+   "median_low": 0.0
+  },
+  "H4_vtx": {
+   "U": 238.0,
+   "p": 0.016558614119769922,
+   "n_high": 16,
+   "n_low": 21,
+   "median_high": 0.2549115769669221,
+   "median_low": 0.07272256728778714
+  },
+  "n_high": 16,
+  "n_low": 21,
+  "solar_share_high_2018": 0.03708609864286491
+ },
+ "jas_main": {
+  "H1": {
+   "pos": 17,
+   "n": 17,
+   "p": 7.62939453125e-06
+  },
+  "median_shift_high": 1.0,
+  "median_shift_low": 0.0,
+  "median_vtx_shift_high": 1.3675228377997701,
+  "H4_vtx": {
+   "U": 329.0,
+   "p": 0.0021225627256086003,
+   "n_high": 18,
+   "n_low": 24,
+   "median_high": 1.3675228377997701,
+   "median_low": 0.48755206520145755
+  }
+ },
+ "vertex": {
+  "H1": {
+   "pos": 18,
+   "n": 18,
+   "p": 3.814697265625e-06
+  },
+  "wilcoxon_p": 3.814697265625e-06,
+  "median_shift_high": 1.3778362040256482,
+  "min_shift_high": 0.1402621166395086,
+  "max_shift_high": 4.307721920946101,
+  "median_shift_low": 0.5982591969434079,
+  "H4": {
+   "U": 334.0,
+   "p": 0.0014112756978825036,
+   "n_high": 18,
+   "n_low": 24,
+   "median_high": 1.3778362040256482,
+   "median_low": 0.5982591969434079
+  },
+  "median_early_high": 17.749472870908342,
+  "median_late_high": 19.93257770139831
+ },
+ "circular": {
+  "H1": {
+   "pos": 18,
+   "n": 18,
+   "p": 3.814697265625e-06
+  },
+  "median_shift_high": 1.386326271628116,
+  "median_shift_low": 0.9266825415498605,
+  "H4": {
+   "U": 314.0,
+   "p": 0.006604173280069732,
+   "n_high": 18,
+   "n_low": 24,
+   "median_high": 1.386326271628116,
+   "median_low": 0.9266825415498605
+  }
+ },
+ "mechanical": {
+  "n": 17,
+  "median_obs": 1.4633762093635312,
+  "median_mech": 1.6807892723984388,
+  "median_swap_supply": 2.093295382669197,
+  "within_half_hour": 15,
+  "median_abs_diff": 0.15055725167419354,
+  "median_obs_minus_mech": 0.02358338527347925,
+  "spearman": 0.9583333333333335,
+  "obs_minus_mech_sign": {
+   "pos": 11,
+   "n": 17,
+   "p": 0.332305908203125
+  },
+  "within_half_hour_swap": 13,
+  "median_kS": 3.752049295590985
+ },
+ "forecast_offsets": {
+  "AZPS": [
+   "2025:+2",
+   "2026:+2"
+  ],
+  "CISO": [
+   "2022:+1",
+   "2023:+1",
+   "2024:+1",
+   "2025:+1"
+  ],
+  "FMPP": [
+   "2026:+3"
+  ],
+  "FPC": [
+   "2020:+3"
+  ],
+  "GCPD": [
+   "2021:-2"
+  ],
+  "IPCO": [
+   "2019:+1"
+  ],
+  "PACW": [
+   "2025:+3"
+  ],
+  "PJM": [
+   "2019:+1",
+   "2020:+1",
+   "2021:+1",
+   "2022:+1",
+   "2023:+1",
+   "2024:+1",
+   "2025:+1",
+   "2026:+1"
+  ],
+  "PNM": [
+   "2021:-1"
+  ],
+  "SC": [
+   "2020:-2"
+  ],
+  "SWPP": [
+   "2026:-1"
+  ]
+ },
+ "H3_excl": {
+  "fcast_realised": {
+   "pos": 10,
+   "n": 15,
+   "p": 0.30175781249999994
+  },
+  "fcast_fixed": {
+   "pos": 9,
+   "n": 15,
+   "p": 0.6072387695312499
+  },
+  "all_realised": {
+   "pos": 7,
+   "n": 12,
+   "p": 0.7744140625
+  },
+  "all_fixed": {
+   "pos": 7,
+   "n": 12,
+   "p": 0.7744140625
+  },
+  "all_fixed_median_diff": 0.11035911998573811
+ }
+}
